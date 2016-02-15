@@ -1,0 +1,42 @@
+mysql> select * from TESTING;
++-----------+----------+
+| FirstName | LastName |
++-----------+----------+
+| John      | DeLong   |
+| Tom       | Gilbert  |
+| Josh      | Pitty    |
+| Patrick   | Stump    |
+| Patrick   | Stump    |
+| Pete      | Wentz    |
++-----------+----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT
+    -> FirstName, LastName
+    -> From
+    -> TESTING
+    -> WHERE
+    -> FirstName = 'John'
+    -> AND LastName LIKE 'D%';
++-----------+----------+
+| FirstName | LastName |
++-----------+----------+
+| John      | DeLong   |
++-----------+----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT
+    -> firstname, lastname
+    -> FROM
+    -> TESTING
+    -> WHERE
+    -> lastname LIKE '%e%';
++-----------+----------+
+| firstname | lastname |
++-----------+----------+
+| John      | DeLong   |
+| Tom       | Gilbert  |
+| Pete      | Wentz    |
++-----------+----------+
+3 rows in set (0.01 sec)
+

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+</html>
+<head>
+
+    <?php 
+    session_start(); /// initialize session 
+    include("passwords.php"); 
+    check_logged(); /// function checks if visitor is logged. 
+    If user is not logged the user is redirected to login.php page  
+    ?> 
+
+    <meta charset="UTF-8" />
+    <title> Login and Registration Form </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="description" content="Login and Registration Form with HTML5 and CSS3" />
+    <meta name="keywords" content="html5, css3, form, switch, animation, :target, pseudo-class" />
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+            background-image: url('http://i62.tinypic.com/24brcew.jpg');
+            background-repeat:repeat-y;
+            background-position: center center;
+            background-size: cover;
+            background-attachment:fixed
+        }
+    </style>
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js">
+    </script>
+
+<body>
+    <style type="text/css">
+        BODY { FONT: 18px verdana, arial, sans-serif; font-weight: normal }
+    </style>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="http://www.sunyit.edu">
+                    <font color="#2ECCFA">SUNY Polytechnical Institute</font>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br>
+    <br><br><br><br><br>
+    <br><br><br>
+
+    <p>
+<center>
+    <b> Please enter in your E-mail and Password: </b>
+</center>
+</p><br>
+
+<script type = "text/javascript">
+    var count = 2;
+    function validate()
+    {
+        var un = document.myform.username.value;
+        var pw = document.myform.pword.value;
+        var valid = false;
+        var t = " tries";
+        var unArray = ["Amos", "ADMIN", "delongj@sunyit.edu", "geisj1@sunyit.edu", "oconnod2@sunyit.edu", "pittarz@sunyit.edu"];
+        var pwArray = ["test", "ADMIN", "password", "password", "password", "password"];  // the corresponding passwords;
+
+        for (var i = 0; i < unArray.length; i++) {
+            if ((un == unArray[i]) && (pw == pwArray[i]))
+            {
+                valid = true;
+                break;
+            }
+        }
+        if (valid)
+        {
+            window.location = "SPI_Website_Program.html";
+            return false;
+        }
+        if (count == 1)
+        {
+            t = " try"
+        }
+        if (count >= 1)
+        {
+            alert("Invalid username and/or password.  You have " + count + t + " left.");
+            document.myform.username.value = "";
+            document.myform.pword.value = "";
+            setTimeout("document.myform.username.focus()", 25);
+            setTimeout("document.myform.username.select()", 25);
+            count--;
+        }
+        else
+        {
+            alert("Still incorrect! You have no more tries left!");
+            document.myform.username.value = "No more tries allowed!";
+            document.myform.pword.value = "";
+            document.myform.username.disabled = true;
+            document.myform.pword.disabled = true;
+            return false;
+        }
+    }
+</script>
+
+<form name = "myform">
+    <p><center> E-Mail: <input type="text" size="17" name="username"></p>
+        <p> Password: <input type="password" size="20" name="pword" onkeydown="if (event.keyCode == 13)
+                    document.getElementById('btnSearch').click()"></p>
+        <input type="button" id="btnSearch" value=" Login " name="Submit" onclick= "validate()">
+    </center>
+</p>
+
+</form>
+<footer>
+    <center>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br>
+        <p>
+            <b>
+                <i>
+                    <font color="WHITE">&copy; SPI Development Pink Team.</br>
+                    DeLong, Geis, Pittarelli, O'Connor
+                </i>
+            </b>
+        </p>
+    </center>
+</footer>
+</body>
+</html>

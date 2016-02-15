@@ -1,0 +1,142 @@
+mysql> CREATE TABLE testing_union1 (
+    ->     ID SMALLINT(5) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    ->     IDName VARCHAR(45) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> CREATE TABLE testing_union2 (
+    ->     ID SMALLINT(5) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    ->     IDName VARCHAR(45) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> insert into testing_union1 (IDName)
+    -> Values('one'),('two'),('three'),('four');
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> insert into testing_union2 (ID,IDName)
+    -> Values(DEFAULT,'one'),(DEFAULT,'two'),(DEFAULT,'three - 3'),(5,'five'),(6,'six'), (7,'seven');
+Query OK, 6 rows affected (0.00 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> SELECT
+    ->     *
+    -> FROM
+    ->     testing_union1;
++----+--------+
+| ID | IDName |
++----+--------+
+|  1 | one    |
+|  2 | two    |
+|  3 | three  |
+|  4 | four   |
++----+--------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT
+    ->     *
+    -> FROM
+    ->     testing_union2;
++----+-----------+
+| ID | IDName    |
++----+-----------+
+|  1 | one       |
+|  2 | two       |
+|  3 | three - 3 |
+|  5 | five      |
+|  6 | six       |
+|  7 | seven     |
++----+-----------+
+6 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT
+    ->     tu1.ID TU1_ID, tu1.IDName TU1_Name
+    -> FROM
+    ->     testing_union1 tu1
+    -> UNION ALL
+    -> SELECT
+    ->     tu2.ID TU2_ID, tu2.IDName TU2_Name
+    -> FROM
+    ->     testing_union2 tu2;
++--------+-----------+
+| TU1_ID | TU1_Name  |
++--------+-----------+
+|      1 | one       |
+|      2 | two       |
+|      3 | three     |
+|      4 | four      |
+|      1 | one       |
+|      2 | two       |
+|      3 | three - 3 |
+|      5 | five      |
+|      6 | six       |
+|      7 | seven     |
++--------+-----------+
+10 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT
+    ->     tu1.ID TU1_ID, tu1.IDName TU1_Name
+    -> FROM
+    ->     testing_union1 tu1
+    -> UNION
+    -> SELECT
+    ->     tu2.ID TU2_ID, tu2.IDName TU2_Name
+    -> FROM
+    ->     testing_union2 tu2;
++--------+-----------+
+| TU1_ID | TU1_Name  |
++--------+-----------+
+|      1 | one       |
+|      2 | two       |
+|      3 | three     |
+|      4 | four      |
+|      3 | three - 3 |
+|      5 | five      |
+|      6 | six       |
+|      7 | seven     |
++--------+-----------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT
+    ->     tu1.ID AS TU1_ID,
+    ->     tu1.IDName AS TU1_Name,
+    ->     tu2.ID AS TU2_ID,
+    ->     tu2.IDName AS TU2_Name
+    -> FROM
+    ->     testing_union1 tu1
+    ->         LEFT OUTER JOIN
+    ->     testing_union2 tu2 USING (ID)
+    -> UNION 
+    -> SELECT
+    ->     tu1.ID AS TU1_ID,
+    ->     tu1.IDName AS TU1_Name,
+    ->     tu2.ID AS TU2_ID,
+    ->     tu2.IDName AS TU2_Name
+    -> FROM
+    ->     testing_union1 tu1
+    ->         RIGHT OUTER JOIN
+    ->     testing_union2 tu2 USING (ID);
++--------+----------+--------+-----------+
+| TU1_ID | TU1_Name | TU2_ID | TU2_Name  |
++--------+----------+--------+-----------+
+|      1 | one      |      1 | one       |
+|      2 | two      |      2 | two       |
+|      3 | three    |      3 | three - 3 |
+|      4 | four     |   NULL | NULL      |
+|   NULL | NULL     |      5 | five      |
+|   NULL | NULL     |      6 | six       |
+|   NULL | NULL     |      7 | seven     |
++--------+----------+--------+-----------+
+7 rows in set (0.01 sec)
+
+mysql> drop table testing_union1, testing_union2;
+Query OK, 0 rows affected (0.01 sec)

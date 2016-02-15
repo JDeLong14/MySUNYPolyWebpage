@@ -1,0 +1,38 @@
+--------------------------- Problem 19.16 - Page 724 ---------------------------
+
+
+**2 SELECT Statements
+
+This would be:
+
+bR because you have to scan through everything.
+
+This would end up being:
+
+SELECT = 2*bR
+
+
+** JOIN Statement
+
+Since a JOIN is the same concept as UNION in that
+it has to go through each relation (R and S) and
+then scan through for each of them once more at the
+end to remove attributes based on the JOIN that is
+happening.
+
+Therefore the cost will be:
+
+JOIN = k*( (bR*log2bR) + (bS*log2bS) )+ bR + bS
+
+** PROJECT Statement
+
+This was already discussed in 19.15.
+
+The cost function is (assuming there is no key relation):
+
+PROJECT = 3*bR + k*bR *log2bR
+
+Therefore, the total cost would be
+
+SELECT + JOIN + PROJECT = (2*bR) + (k*( (bR*log2bR) + (bS*log2bS) )+ bR + bS) +
+			3*bR + k*bR *log2bR)

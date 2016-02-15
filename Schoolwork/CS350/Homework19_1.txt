@@ -1,0 +1,48 @@
+--------------------------- Problem 19.15 - Page 724 ---------------------------
+
+
+Note: Assume R and S are relations, and b stands for block.
+
+PROJECT Cost Function:
+
+As stated on page 696 "19.4 Algorithms for PROJECT and Set Opertations":
+
+	"If <attribute list> includes a key of relation R, because in
+	this case the result of the operation will have the same number
+	of tuples as R."
+
+	"If <attribute list> does not include a key of R, duplicate tuples
+	must be eliminated."
+
+Therefore, if there is a key of relation R, it will simply be 2*bR.
+
+If it doesn't have a key, it has to be sorted (stated on page 697), therefore
+3*bR + k*bR *log2bR  becomes the new cost function.
+
+
+UNION Cost Function:
+
+Since a UNION function will need all tuples from each relation,
+k*b<relation>*log2b<relation> from above will be needed, however this time
+it will be written as:
+
+k*( (bR*log2bR) + (bS*log2bS)
+
+because there are now two relations, and we will scan and merge them at the same time.
+To finish it off, the final cost function will look like:
+
+k*( (bR*log2bR) + (bS*log2bS) )+ bR + bS
+
+because you need to scan through it one more time (for each relation, hence both bR and bS)
+in order to produce the desired UNION result.
+
+
+INTERSECTION Cost Function:
+
+Same as UNION, but the result will be only those in both relations (cost function stays the
+same regardless).
+
+
+SET DIFFERENCE Cost Function:
+
+Same as UNION, and INTERSECTION.

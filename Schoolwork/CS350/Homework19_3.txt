@@ -1,0 +1,8 @@
+--------------------------- Problem 19.17 - Page 724 ---------------------------
+
+
+A nondense index can be used in the implementation of an
+aggregate operator, because not all aggregate operators
+need all the unique values. One example could be the
+MIN/MAX Aggregates, which can search through and find
+the minimum and max with a nondense index just fine.

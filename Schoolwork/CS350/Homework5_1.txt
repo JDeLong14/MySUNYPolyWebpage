@@ -1,0 +1,37 @@
+--------------------------- Problem 7.19 - Page 234 ---------------------------
+
+The ER diagram in figure 7.20 on page 236 shows an airline
+reservation system.
+
+In the diagram, I can conclude that:
+
+- Each AirPort (Entity) has:
+	1.) An Airport_code as a primary key.
+	2.) A city and a state it belongs to.
+	3.) The airport's name.
+	
+- Each Airplane_Type (Entity) has:
+	1.) A unique type name.
+	2.) A company.
+	3.) Maximum amount of seats.
+	
+It is also noted if an airplane type can land.
+
+- Each Airplane has a:
+	1.) Unique id.
+	2.) Total number of seats.
+	
+And also has a type (as mentioned above).
+
+- A flight has a:
+	1.) Unique flight number.
+	2.) An airline.
+	3.) And weekdays it flies.
+	
+And also has legs, and fares.
+
+- A FightLeg (weak entity) has:
+	1.) A leg number.
+	2.) Can have Reservations (customer name, phone, and seat number).
+	
+And has an arrival airport, and departure airport.

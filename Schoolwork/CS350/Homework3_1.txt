@@ -1,0 +1,109 @@
+------------------------ Problem 5.6 - Page 141 ------------------------ 
+
+a)
+SELECT 
+    s.Name, s.Major
+FROM
+    student s
+WHERE
+    NOT EXISTS( SELECT 
+            *
+        FROM
+            grade_report g
+        WHERE
+            s.Student_number = g.Student_number
+                AND NOT (grade = 'A'));
+				
+b)
+SELECT 
+    S.Name, S.Major
+FROM
+    grade_report G
+        INNER JOIN
+    student S ON (G.Student_number = S.Student_number)
+WHERE
+    G.Student_number NOT IN (SELECT 
+            Student_number
+        FROM
+            grade_report
+        WHERE
+            grade = 'A');
+
+
+
+------------------------ Problem 5.6 - Output ------------------------ 
+
+
+************TABLES************
+mysql> SELECT *
+    -> FROM student;
++-------+----------------+-------+-------+
+| Name  | Student_number | Class | Major |
++-------+----------------+-------+-------+
+| John  |              1 |     1 | CS    |
+| Bill  |              4 |     2 | CS    |
+| James |              7 |     3 | MAT   |
+| Tom   |              8 |     4 | CS    |
+| Yazz  |             11 |     1 | ENG   |
++-------+----------------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM grade_report;
++----------------+-------+
+| Student_number | Grade |
++----------------+-------+
+|              1 | A     |
+|              4 | B     |
+|              7 | B     |
+|              1 | A     |
+|             11 | B     |
+|              1 | A     |
+|              8 | A     |
+|              8 | A     |
+|             11 | A     |
++----------------+-------+
+9 rows in set (0.00 sec)
+
+a.)
+mysql> SELECT
+    ->     s.Name, s.Major
+    -> FROM
+    ->     student s
+    -> WHERE
+    ->     NOT EXISTS( SELECT
+    ->             *
+    ->         FROM
+    ->             grade_report g
+    ->         WHERE
+    ->             s.Student_number = g.Student_number
+    ->                 AND NOT (grade = 'A'));
++------+-------+
+| Name | Major |
++------+-------+
+| John | CS    |
+| Tom  | CS    |
++------+-------+
+2 rows in set (0.01 sec)
+
+b.)
+mysql> SELECT
+    ->     S.Name, S.Major
+    -> FROM
+    ->     grade_report G
+    ->         INNER JOIN
+    ->     student S ON (G.Student_number = S.Student_number)
+    -> WHERE
+    ->     G.Student_number NOT IN (SELECT
+    ->             Student_number
+    ->         FROM
+    ->             grade_report
+    ->         WHERE
+    ->             grade = 'A');
++-------+-------+
+| Name  | Major |
++-------+-------+
+| Bill  | CS    |
+| James | MAT   |
++-------+-------+
+2 rows in set (0.00 sec)

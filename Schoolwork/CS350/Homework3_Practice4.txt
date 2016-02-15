@@ -1,0 +1,29 @@
+** NOTE: MySQL DB would not let me create views, so this is just Syntax, no output.
+
+create view GetDependents AS
+    select 
+        essn, fname, minit, lname, D.sex
+    from
+        devensj.dependent D
+            inner join
+        devensj.employee E ON (D.essn = E.ssn);
+
+select 
+    essn,
+    concat(fname, ' ', minit, '. ', lname) AS FullName,
+    COUNT(D.sex) NumOfMaleDependants
+from
+    GetDependents
+where
+    D.sex = 'M'
+group by essn;
+
+select 
+    essn,
+    concat(fname, ' ', minit, '. ', lname) AS FullName,
+    COUNT(D.sex) NumOfMaleDependants
+from
+    GetDependents
+where
+    D.sex = 'F'
+group by essn;

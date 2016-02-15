@@ -1,0 +1,87 @@
+mysql> SELECT
+    ->     *
+    -> FROM
+    ->     devensj.dependent
+    -> Order by essn;
++-----------+----------------+------+------------+--------------+
+| essn      | dependent_name | sex  | bdate      | relationship |
++-----------+----------------+------+------------+--------------+
+| 123456789 | Alice          | F    | 1978-12-31 | Daughter     |
+| 123456789 | Elizabeth      | F    | 0000-00-00 | Spouse       |
+| 123456789 | Michael        | M    | 1978-01-01 | Son          |
+| 333445555 | Alice          | F    | 1976-04-05 | Daughter     |
+| 333445555 | Joy            | F    | 1948-05-03 | Spouse       |
+| 333445555 | Theodore       | M    | 1973-10-25 | Son          |
+| 444444400 | Johnny         | M    | 1997-04-04 | Son          |
+| 444444400 | Tommy          | M    | 1999-06-07 | Son          |
+| 444444401 | Chris          | M    | 1969-04-19 | Spouse       |
+| 444444402 | Sam            | M    | 1964-02-14 | Spouse       |
+| 987654321 | Abner          | M    | 1932-02-29 | Spouse       |
++-----------+----------------+------+------------+--------------+
+11 rows in set (0.00 sec)
+
+mysql>
+mysql> select
+    ->     essn,
+    ->     concat(fname, ' ', minit, '. ', lname) AS FullName,
+    ->     COUNT(D.sex) NumOfMaleDependants
+    -> from
+    ->     devensj.dependent D
+    ->         inner join
+    ->     devensj.employee E ON (D.essn = E.ssn)
+    -> where
+    ->     D.sex = 'M'
+    -> group by essn;
++-----------+---------------------+---------------------+
+| essn      | FullName            | NumOfMaleDependants |
++-----------+---------------------+---------------------+
+| 123456789 | John B. Smith       |                   1 |
+| 333445555 | Franklin T. Wong    |                   1 |
+| 444444400 | Alex D. Freed       |                   2 |
+| 444444401 | Bonnie S. Bays      |                   1 |
+| 444444402 | Alec C. Best        |                   1 |
+| 987654321 | Jennifer S. Wallace |                   1 |
++-----------+---------------------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql>
+mysql> select
+    ->     essn,
+    ->     concat(fname, ' ', minit, '. ', lname) AS FullName,
+    ->     COUNT(D.sex) NumOfFemaleDependants
+    -> from
+    ->     devensj.dependent D
+    ->         inner join
+    ->     devensj.employee E ON (D.essn = E.ssn)
+    -> where
+    ->     D.sex = 'F'
+    -> group by essn;
++-----------+------------------+-----------------------+
+| essn      | FullName         | NumOfFemaleDependants |
++-----------+------------------+-----------------------+
+| 123456789 | John B. Smith    |                     2 |
+| 333445555 | Franklin T. Wong |                     2 |
++-----------+------------------+-----------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> select
+    ->     essn,
+    ->     concat(fname, ' ', minit, '. ', lname) AS FullName,
+    ->     COUNT(essn) NumOfDependents
+    -> from
+    ->     devensj.dependent D
+    ->         inner join
+    ->     devensj.employee E ON (D.essn = E.ssn)
+    -> group by essn;
++-----------+---------------------+-----------------+
+| essn      | FullName            | NumOfDependents |
++-----------+---------------------+-----------------+
+| 123456789 | John B. Smith       |               3 |
+| 333445555 | Franklin T. Wong    |               3 |
+| 444444400 | Alex D. Freed       |               2 |
+| 444444401 | Bonnie S. Bays      |               1 |
+| 444444402 | Alec C. Best        |               1 |
+| 987654321 | Jennifer S. Wallace |               1 |
++-----------+---------------------+-----------------+
+6 rows in set (0.01 sec)

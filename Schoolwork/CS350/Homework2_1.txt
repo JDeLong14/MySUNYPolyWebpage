@@ -1,0 +1,56 @@
+-------------------- Problem 3.19 - Page 84 ----------------
+
+a.) Area code on the phone numbers is missing.
+
+b.) Append the area code to the numbers themselves.
+
+c.) The advantages are that if there is a name change, because 
+someone got married, only the last name needs to be changed.
+However, if it was one attribute, it would need to be completely
+reset, even though only the last name is changing.
+
+d.) If the information stored is going to change part of the value
+when an update query is called, it should be stored in separate
+attributes,other than that, store it in one.
+
+e.) Design 1: Add five attributes for phone numbers, and set the
+unused ones to null.
+
+Design 2: Add a foreign key table, that has the Student's Ssn as a reference,
+that points to secondary student phone numbers.
+
+
+
+-------------------- Problem 4.12 - Page 113 ----------------
+
+a.) Retrieve the names of all senior students majoring in 'CS'.
+
+	SELECT Name
+	FROM   STUDENT
+	WHERE  Major='CS' AND Class=4;
+
+
+b.) Retrieve the names of all courses taught by Professor King in 2007 and 2008.
+
+	SELECT Course_name
+	FROM   COURSE AS C,SECTION AS S
+	WHERE  Instructor='King' AND  (Year='07' OR Year='08') AND C.Course_Number=S.Course_Number;
+
+
+c.) For each section taught by Professor King, retrieve the course number, semester,
+ year, and number of students who took the section.
+
+	SELECT Course_number,Semester,Year, count(GRADE_REPORT.Section_Identifier)
+	FROM   SECTION AS S,GRADE_REPORT AS R
+	WHERE  Instructor='King' AND S.Section_Identifier = R.Section_Identifier;
+
+
+d.) Retrieve the name and transcript of each senior student (Class = 4)
+majoring in CS.
+
+	SELECT Name, Course_name, Course_Number, Credit_hours, Semester, Year, Grade
+	FROM   STUDENT AS T, GRADE_REPORT AS R, COURSE AS C, SECTION AS S
+	WHERE  T.Major='CS' AND T.Class=4
+	       AND T.Student_number=R.Student_number
+	       AND R.Section_Identifier=S.Section_Identifier
+	       AND S.Course_number=C.Course_number;

@@ -1,0 +1,35 @@
+mysql> SELECT * FROM testing_things;
++----+-----------+----------+
+| ID | FirstName | LastName |
++----+-----------+----------+
+|  1 | James     | Devens   |
+|  2 | John      | Gilbert  |
+|  3 | John      | Yorick   |
+|  4 | Tom       | Yasmir   |
+|  5 | Devin     | Zeno     |
++----+-----------+----------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT
+    ->     CONCAT(FirstName, ' ', LastName) AS FullName,
+    ->     LENGTH(CONCAT(FirstName, ' ', LastName)) AS NameLength,
+    ->     CONCAT(LEFT(FirstName, 1),
+    ->             '.',
+    ->             LEFT(LastName, 1),
+    ->             '.') AS Initials,
+    ->     REVERSE(CONCAT(FirstName, ' ', LastName)) AS ReverseName,
+    ->     REPLACE(CONCAT(FirstName, ' ', LastName),
+    ->         FirstName,
+    ->         '~') AS Replaced
+    -> FROM
+    ->     testing_things;
++--------------+------------+----------+--------------+-----------+
+| FullName     | NameLength | Initials | ReverseName  | Replaced  |
++--------------+------------+----------+--------------+-----------+
+| James Devens |         12 | J.D.     | sneveD semaJ | ~ Devens  |
+| John Gilbert |         12 | J.G.     | trebliG nhoJ | ~ Gilbert |
+| John Yorick  |         11 | J.Y.     | kciroY nhoJ  | ~ Yorick  |
+| Tom Yasmir   |         10 | T.Y.     | rimsaY moT   | ~ Yasmir  |
+| Devin Zeno   |         10 | D.Z.     | oneZ niveD   | ~ Zeno    |
++--------------+------------+----------+--------------+-----------+
+5 rows in set (0.01 sec)

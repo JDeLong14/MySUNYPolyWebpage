@@ -1,0 +1,87 @@
+--------------------------- Problem 17.41 - Page 629 ---------------------------
+
+Assume that V is the generic object value type of the records in the file.
+This is in Java.
+Assume methods for operation on files are implemented:
+
+OPEN, FIND, FINDNEXT, READ, INSERT, DELETE, MODIFY, CLOSE
+REORGANIZE, READ_ORDERED
+
+amountBlocks(Record record) gets the count of blocks, if the record is spanned.
+amountFields(Block block) gets the count of fields.
+getBlock(int index) gets the block at the index provided.
+**The getBlock method will find the pointer of the next block
+which is at the end of the current block it is called from **.
+
+
+public void initialize(){
+	File file = new File();
+	Scanner inputFile = new Scanner(file);
+	OPEN(inputFile); //opens file
+}
+
+Checks if there is a pointer, then increments count if it does.
+public int amountBlocks(Record record){
+	Block block = new Block (record.READ());
+	int count = 1; //Start at one because a block has already be read.
+	while(block.hasPointer()){
+		block = new Block(block.getPointer());
+		count++;
+	}
+}
+
+public int amountFields(Block block){
+	int count = 0;
+	while(record.hasNextField()){
+		record.nextField();
+		count++;
+	}
+}
+
+
+a)
+
+Fixed-length, unspanned
+public static void main(String[] args){
+	ArrayList<V> fieldRecords = new ArrayList<V>();
+	initialize();
+	
+	Record currentRecord;
+	while(file.hasNext()){
+		currentRecord = FINDNEXT();
+		fieldRecords.add(currentRecord.READ());
+	}
+	inputFile.close();
+}
+
+
+
+b)
+
+Fixed-length, spanned
+public static void main(String[] args){
+	ArrayList<V[]> fieldRecords = new ArrayList<V[]>();
+	initilize();
+	
+	Record currentRecord;
+	while(file.hasNext()){
+		currentRecord = FINDNEXT();
+		int length = currentRecord.amountBlocks();
+		
+		V[] blocks = new V[length]();
+		for(int i=0; i<length; i++){
+			blocks[i] = currentRecord.READ().getBlock(i);
+		}
+		fieldRecords.add(blocks);
+	}
+	inputFile.close();
+}
+	
+c,d,e,f)
+Same as a) for unspanned and b for spanned,since the ArrayList is 
+storing the entire record for later use.
+This means fields are not an issue, and the variable length of blocks
+is covered by the amountBlocks() method.
+If you need to read the fields, the amountFields method counts how many
+there are, and you can further manipulate the data based on that, by
+flipping through each field in a for loop, and storing them separately.

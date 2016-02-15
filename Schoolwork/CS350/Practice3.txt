@@ -1,0 +1,82 @@
+mysql> Set @Test1=1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> select
+    ->     case @Test1
+    ->         when 1 then 'It\'s One'
+    ->         else 'Neither'
+    ->     END as Result;
++----------+
+| Result   |
++----------+
+| It's One |
++----------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> Set @Test1=2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> select
+    ->     case @Test1
+    ->         when @Test1 = 1 then 'It\'s One'
+    ->         else 'Not One'
+    ->     END as Result;
++---------+
+| Result  |
++---------+
+| Not One |
++---------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> Set @Test1=4;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select
+    ->     if(@Test1 > 1,
+    ->         'Greater than one.',
+    ->         'Not greater than one');
++-----------------------------------------------------------------------------+
+| if(@Test1 > 1,
+        'Greater than one.',
+        'Not greater than one') |
++-----------------------------------------------------------------------------+
+| Greater than one.                                                           |
++-----------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select IFNULL(1 / 0, 'It\'s Null');
++-----------------------------+
+| IFNULL(1 / 0, 'It\'s Null') |
++-----------------------------+
+| It's Null                   |
++-----------------------------+
+1 row in set (0.00 sec)
+
+mysql> select IFNULL(12, 'It\'s Null');
++--------------------------+
+| IFNULL(12, 'It\'s Null') |
++--------------------------+
+| 12                       |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> select nullif(1, 1);
++--------------+
+| nullif(1, 1) |
++--------------+
+|         NULL |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select nullif(1, 4);
++--------------+
+| nullif(1, 4) |
++--------------+
+|            1 |
++--------------+
+1 row in set (0.00 sec)

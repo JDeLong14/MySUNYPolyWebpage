@@ -1,0 +1,30 @@
+mysql> SELECT DISTINCT
+    ->     Essn,
+    ->     Pno AS ProjectNumber,
+    ->     Hours AS HoursWorked,
+    ->     CONCAT(fname, ' ', minit, '. ', lname) AS FullName
+    -> FROM
+    ->     works_on,
+    ->     employee
+    -> WHERE
+    ->     (Pno , Hours) IN (SELECT
+    ->             Pno, Hours
+    ->         FROM
+    ->             works_on
+    ->         WHERE
+    ->             Essn = '111111100' OR Essn = '222222201')
+    ->         AND Essn = ssn;
++-----------+---------------+-------------+-----------------+
+| Essn      | ProjectNumber | HoursWorked | FullName        |
++-----------+---------------+-------------+-----------------+
+| 111111100 |            61 |        40.0 | Jared D. James  |
+| 111111101 |            61 |        40.0 | Jon C. Jones    |
+| 111111102 |            61 |        40.0 | Justin n. Mark  |
+| 111111103 |            61 |        40.0 | Brad C. Knight  |
+| 666666607 |            61 |        40.0 | Gerald D. Small |
+| 666666610 |            61 |        40.0 | Naveen B. Drew  |
+| 666666611 |            61 |        40.0 | Carl E. Reedy   |
+| 666666612 |            61 |        40.0 | Sammy G. Hall   |
+| 222222201 |            62 |        48.0 | Josh U. Zell    |
++-----------+---------------+-------------+-----------------+
+9 rows in set (0.01 sec)

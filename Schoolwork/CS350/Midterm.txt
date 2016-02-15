@@ -1,0 +1,126 @@
+1) Database Design
+
+	1.1) Give an equivalent relational schema.
+
+		Create table COURSE(Book VARCHAR(30), Prerequisite VARCHAR(30), CourseName VARCHAR(15));
+		Create table INSTRUCTOR(Salary VARCHAR(10), PopularityRating VARCHAR(10), CourseTeaching VARCHAR(15));
+		Create table HOUR/ROOM(SeatingCapacity VARCHAR(10), Building VARCHAR(10), RoomNumber VARCHAR(10), Hour VARCHAR(10), CourseNumber VARCHAR(15));
+		In-Charge(InstructorName, CourseName, Name, Course);
+		Teaching(InstructorName, CourseName, Hourstought, Name, Course, Hour);
+
+	1.2) Using the schema that you have just developed, give queries in the relational algebra to find the following information:
+
+		a) The list of all instructors who teach CS350 between 2am and 7am
+
+			SELECT	InstructorName, CourseTeaching
+			FROM	INSTRUCTOR
+			WHERE	InstructorName AND CourseTeaching IN
+				(SELECT	Hour, Course
+				 FROM	HOUR/ROOM
+				 WHERE	Course=CourseTeaching AND Hour=2am-7am
+				)
+	
+		b) The list of all instructors who teach a course they are in charge of.
+		
+			SELECT	InstructorName, CourseTeaching
+			FROM 	INSTRUCTOR
+			WHERE	InstructorName=1 IN
+				(SELECT CourseName
+				 FROM 	COURSE
+				 WHERE	CourseName=CourseTeaching
+				)
+
+	1.3) Consider the instruction-scheme relational schema below.
+		instruction-scheme (for problem 1.3): 
+		instruction-scheme = (book, prerequisite, salary, popularity rating, seating-capacity, building, room number, hour)
+
+		a) What problems might arise if we adopt this relational schema?
+
+				Problems that might arise for this kind of schema are the following and are not limited to: Updating, 
+			inserting, deletion, Speed, and memory consumption. Due to the scheme having everything in it, accessing this
+			shouldnt be the issue unless the data starts to grow to infinity. Heading towwards infinity, the speed will 
+			decrease in performance and the memory consumption will be increased. Updating this should not pose much of a 
+			problem due to the way the schema is build upon. Insertion of data in this should be a bigger issue as well as 
+			deletion of data in this schema. If the data in this goes towards infinity, there will be performance issues 
+			when deleting and inserting.
+
+		b) Describe any circumstances in which you would recommend such a schema.
+
+				The only time I would use this schema, is if I knew how much data I would be putting into the database. 
+			If the database's intentions are to be big, I would not recommend this schema to anyone, due to how slow the
+			performance of the database would be. If the database's intentions are to be on the small scale approach, then
+			I would recommend this schema. You dont need many tables and variables for such a small database. Having 
+			everything in one with everything in it could be all that you need for a successful database. Though, if you 
+			start to gain popularity and adding more data to the database, the performance of the database will eventually 
+			start to decline.
+
+
+2) Tuple Relational Calculus AND Domain Relational Calculus Queries
+
+mysql> select * from FREQUENTS;
++---------+--------------+
+| Drinker | Bar          |
++---------+--------------+
+| Scott   | 12 North     |
+| Scott   | Triangle Pub |
+| John    | Triangle Pub |
+| Devin   | StudyHall    |
++---------+--------------+
+4 rows in set (0.01 sec)
+
+mysql> select * from SERVES;
++--------------+----------------+
+| Bar          | Beer           |
++--------------+----------------+
+| Triangle Pub | Bud            |
+| Triangle Pub | Bud-Light      |
+| Triangle Pub | Coors          |
+| Triangle Pub | ShockTop       |
+| Triangle Pub | Heinikan       |
+| 12 North     | Bud            |
+| 12 North     | Bud-Light      |
+| Bucklys      | Bud            |
+| Bucklys      | Bud-Light      |
+| Bucklys      | Corona         |
+| Bucklys      | Smirnoff       |
+| Bucklys      | Reds Apple Ale |
++--------------+----------------+
+12 rows in set (0.00 sec)
+
+mysql> select * from LIKES;
++---------+----------------+
+| Drinker | Beer           |
++---------+----------------+
+| John    | Bud            |
+| John    | Bud-Light      |
+| John    | Coors          |
+| John    | Reds Apple Ale |
+| Scott   | Bud            |
+| Scott   | Bud-Light      |
+| Scott   | Coors          |
+| Scott   | Corona         |
+| Devin   | Heinikan       |
+| Devin   | ShockTop       |
+| Devin   | Smirnoff       |
++---------+----------------+
+11 rows in set (0.01 sec)
+
+	2.1) Print the bars that serve a beer that drinker Scott likes.
+		
+		mysql> SELECT Bar
+   		 -> FROM FREQUENTS
+	         -> WHERE Drinker AND Beer IN
+	         -> (SELECT Beer
+	         -> FROM LIKES
+  	         -> WHERE Beer AND Bar IN
+         	 -> (SELECT Bar
+                 -> FROM SERVES
+                 -> WHERE Beer=Beer));
+
+	2.2) Print the drinkers that frequent at least one bar that serves a beer they like.
+		mysql> SELECT Drinker
+			From  FREQUENTS
+			WHERE Drinker AND BEER in
+			(SELECT Beer
+			FROM LIKES
+			WHERE Beer=Beer AND Drinker=Drinker);

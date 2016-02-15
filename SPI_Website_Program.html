@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <SCRIPT LANGUAGE="JavaScript">
+            $(document).keydown(function(e) {
+                var nodeName = e.target.nodeName.toLowerCase();
+
+                if (e.which === 8) {
+                    if ((nodeName === 'input' && e.target.type === 'text') ||
+                            nodeName === 'textarea') {
+                        // do nothing
+                    } else {
+                        e.preventDefault();
+                    }
+                }
+            });
+        </script>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title> SPI Program </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+                background-image: url('http://i62.tinypic.com/24brcew.jpg');
+                background-repeat:repeat-y;
+                background-position: center center;
+                background-size: cover;
+                background-attachment:fixed
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js">
+        </script>
+        <script src="processing.js">
+        </script>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="http://www.sunyit.edu">
+                        <font color="#2ECCFA">SUNY Polytechnical Institute</font>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <style type="text/css">
+            BODY { FONT: 18px verdana, arial, sans-serif; font-weight: normal }
+        </style>
+
+        <!--<center>
+            <img src="Homework.jpg" width="600" height="600" style="vertical-align:middle">
+        </center>-->
+
+        <br><br><br><br>
+    <center>
+        <canvas data-processing-sources="SPI_App_Curved.pde">
+        </canvas>
+    </center>
+
+    
+    <form method="get" action="SPI_Website_Program_OLD.html">
+        <center>
+            <button type="submit"> Click to go to the old SPI Program</button>
+        </center>
+    </form>
+    <form method="get" action="SPI_Website_Index.html">
+        <br>
+        <center>
+            <button type="submit">  Click to go to SPI Website Homepage</button>
+        </center>
+    </form>
+
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br>
+
+    <footer>
+        <center>
+            <p>
+                <b>
+                    <i>
+                        <font color="WHITE">&copy; SPI Development Pink Team.</br>
+                        DeLong, Geis, Pittarelli, O'Connor
+                    </i>
+                </b>
+            </p>
+        </center>
+    </footer>
+
+    <SCRIPT LANGUAGE="JavaScript">
+        var allowedreferrer = "SPI_Website_Security.html";
+        if (document.referrer.indexOf(allowedreferrer) == -1) {
+            alert(" This page requires you to login. ");
+            window.location = allowedreferrer;
+        }
+    </script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js">
+    </script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.js"><\/script>')</script>
+    <script src="js/vendor/bootstrap.min.js">
+    </script>
+    <script src="js/main.js">
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+mysql> CREATE TABLE testing_joins1 (
+    ->     StudentID SMALLINT(5) NOT NULL AUTO_INCREMENT,
+    ->     StudentGPA DOUBLE NOT NULL,
+    ->     PRIMARY KEY (StudentID)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into testing_joins1 (StudentGPA)
+    -> values (3.5),(2.8),(4.0),(3.75);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE testing_joins2 (
+    ->     StudentID SMALLINT(5) NOT NULL AUTO_INCREMENT,
+    ->     StudentGPA DOUBLE NOT NULL,
+    ->     PRIMARY KEY (StudentID)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into testing_joins2 (StudentGPA)
+    -> values (3.5),(2.8),(4.0),(3.75),(3.33),(2.34),(3.93);
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> SELECT
+    ->     *
+    -> FROM
+    ->     testing_joins1;
++-----------+------------+
+| StudentID | StudentGPA |
++-----------+------------+
+|         1 |        3.5 |
+|         2 |        2.8 |
+|         3 |          4 |
+|         4 |       3.75 |
++-----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     *
+    -> FROM
+    ->     testing_joins2;
++-----------+------------+
+| StudentID | StudentGPA |
++-----------+------------+
+|         1 |        3.5 |
+|         2 |        2.8 |
+|         3 |          4 |
+|         4 |       3.75 |
+|         5 |       3.33 |
+|         6 |       2.34 |
+|         7 |       3.93 |
++-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     t1.StudentID AS T1StudentID,
+    ->     t1.StudentGPA AS T1StudentGPA,
+    ->     t2.StudentID AS T2StudentID,
+    ->     t2.StudentGPA AS T2StudentGPA
+    -> FROM
+    ->     testing_joins2 t2
+    ->         LEFT JOIN
+    ->     testing_joins1 t1 ON t1.StudentID = t2.StudentID;
++-------------+--------------+-------------+--------------+
+| T1StudentID | T1StudentGPA | T2StudentID | T2StudentGPA |
++-------------+--------------+-------------+--------------+
+|           1 |          3.5 |           1 |          3.5 |
+|           2 |          2.8 |           2 |          2.8 |
+|           3 |            4 |           3 |            4 |
+|           4 |         3.75 |           4 |         3.75 |
+|        NULL |         NULL |           5 |         3.33 |
+|        NULL |         NULL |           6 |         2.34 |
+|        NULL |         NULL |           7 |         3.93 |
++-------------+--------------+-------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> DROP TABLE testing_joins1, testing_joins2;
+Query OK, 0 rows affected (0.01 sec)
